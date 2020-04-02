@@ -1,4 +1,8 @@
-import { GET_ALL_DECKS } from "../actions/deck";
+import {
+  CREATE_DECK,
+  GET_ALL_DECKS,
+  REMOVE_DECK
+} from "../actions/deck";
 
 export default (state = {}, action) => {
   switch (action.type) {
@@ -7,6 +11,15 @@ export default (state = {}, action) => {
         ...state,
         ...action.decks
       };
+    case CREATE_DECK:
+      return {
+        ...state,
+        ...action.deck
+      };
+    case REMOVE_DECK:
+      return Object.assign({}, state, {
+        [action.key]: undefined
+      });
     default:
       return state;
   }

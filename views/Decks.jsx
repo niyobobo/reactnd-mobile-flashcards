@@ -1,5 +1,6 @@
+import { FontAwesome, Ionicons } from '@expo/vector-icons';
 import React, { Component } from 'react';
-import { FlatList } from 'react-native';
+import { FlatList, Platform, StyleSheet, Text, View } from 'react-native';
 import { connect } from 'react-redux';
 import DeckCard from '../components/DeckCard';
 import { getAllDecks } from '../redux/actions/deck';
@@ -28,6 +29,19 @@ class Decks extends Component {
 
   render() {
     const { decks } = this.props;
+    if (!Object.keys(decks).length) {
+      return (
+        <View style={styles.container}>
+          {Platform.OS === 'ios' ? (
+            <Ionicons name="ios-add" size={100} />
+          ) : (
+            <FontAwesome name="edit" size={80} />
+          )}
+          <Text>Go ahead and create your first deck!</Text>
+        </View>
+      );
+    }
+
     return (
       <FlatList
         data={Object.keys(decks)}
@@ -38,8 +52,16 @@ class Decks extends Component {
   }
 }
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
+  }
+});
+
 const mapStateToProps = decks => ({
-  decks
+  decks: JSON.parse(JSON.stringify(decks))
 });
 
 const mapDispatchToProps = dispatch => ({

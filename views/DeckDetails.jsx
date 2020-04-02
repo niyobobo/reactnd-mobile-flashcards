@@ -1,30 +1,56 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import CustomBtn from '../components/CustomBtn';
-import { primaryDark } from '../utils/colors';
 import { connect } from 'react-redux';
+import CustomBtn from '../components/CustomBtn';
+import { deleteDeck } from '../redux/actions/deck';
+import { primaryDark, red } from '../utils/colors';
 
-const DeckDetails = ({ deck }) => {
-  const { title, questions } = deck;
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>{title}</Text>
-      <Text style={styles.size}>
-        {questions.length > 1
-          ? `${questions.length} Cards`
-          : `${questions.length} Card`}
-      </Text>
-      <View>
-        <CustomBtn backgroundColor={primaryDark} onPress={() => {}}>
-          Add Card
-        </CustomBtn>
-        <CustomBtn backgroundColor={primaryDark} onPress={() => {}} outline>
-          Start Quiz
-        </CustomBtn>
+class DeckDetails extends Component {
+  handleRemoveDeck = () => {
+    const { id, navigation, removeDeck } = this.props;
+    removeDeck(id);
+    navigation.goBack();
+  };
+
+  render() {
+    const { deck } = this.props;
+    if (!deck) {
+      return (
+        <View>
+          <Text>No data available</Text>
+        </View>
+      );
+    }
+
+    const { title, questions } = deck;
+
+    return (
+      <View style={styles.container}>
+        <Text style={styles.title}>{title}</Text>
+        <Text style={styles.size}>
+          {questions.length > 1
+            ? `${questions.length} Cards`
+            : `${questions.length} Card`}
+        </Text>
+        <View>
+          <CustomBtn backgroundColor={primaryDark} onPress={() => {}}>
+            Add Card
+          </CustomBtn>
+          <CustomBtn backgroundColor={primaryDark} onPress={() => {}} outline>
+            Start Quiz
+          </CustomBtn>
+          <CustomBtn
+            backgroundColor={red}
+            onPress={this.handleRemoveDeck}
+            outline
+          >
+            Delete Deck
+          </CustomBtn>
+        </View>
       </View>
-    </View>
-  );
-};
+    );
+  }
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -43,12 +69,17 @@ const styles = StyleSheet.create({
   }
 });
 
+const mapDispatchToProps = dispatch => ({
+  removeDeck: key => dispatch(deleteDeck(key))
+});
+
 const mapStateToProps = (decks, { route }) => {
   const { key } = route.params;
   const deck = decks[key];
   return {
-    deck
+    deck,
+    id: key
   };
 };
 
-export default connect(mapStateToProps)(DeckDetails);
+export default connect(mapStateToProps, mapDispatchToProps)(DeckDetails);
