@@ -1,26 +1,49 @@
 import React, { Component } from 'react';
-import { View, Text, FlatList } from 'react-native';
+import { FlatList } from 'react-native';
+import { connect } from 'react-redux';
 import DeckCard from '../components/DeckCard';
-import { data } from '../utils/data';
+import { getAllDecks } from '../redux/actions/deck';
 
 class Decks extends Component {
-  state = {};
+  componentDidMount() {
+    this.props.getDecks();
+  }
+
+  handleClick = (key, title) => {
+    const { navigation } = this.props;
+    navigation.navigate('DeckDetails', { key, title });
+  };
 
   renderItem = ({ item }) => {
-    const { title, questions } = data[item];
+    const { decks } = this.props;
+    const { title, questions } = decks[item];
     return (
       <DeckCard
-        key={item}
         title={title}
         questions={questions}
-        onPress={() => {}}
+        onPress={() => this.handleClick(item, title)}
       />
     );
   };
 
   render() {
-    return <FlatList data={Object.keys(data)} renderItem={this.renderItem} />;
+    const { decks } = this.props;
+    return (
+      <FlatList
+        data={Object.keys(decks)}
+        renderItem={this.renderItem}
+        keyExtractor={item => item}
+      />
+    );
   }
 }
 
-export default Decks;
+const mapStateToProps = decks => ({
+  decks
+});
+
+const mapDispatchToProps = dispatch => ({
+  getDecks: () => dispatch(getAllDecks())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Decks);

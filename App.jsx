@@ -5,7 +5,10 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Constants from 'expo-constants';
 import React from 'react';
 import { Platform, StatusBar, View } from 'react-native';
+import { Provider } from 'react-redux';
+import store from './redux/store';
 import { primaryDark, white } from './utils/colors';
+import DeckDetails from './views/DeckDetails';
 import Decks from './views/Decks';
 import NewDeck from './views/NewDeck';
 
@@ -62,20 +65,27 @@ const AppStatusBar = ({ backgroundColor }) => {
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <AppStatusBar backgroundColor={primaryDark} />
-      <Stack.Navigator
-        screenOptions={{
-          headerTintColor: white,
-          headerStyle: { backgroundColor: primaryDark }
-        }}
-      >
-        <Stack.Screen
-          name="Home"
-          component={TabNavigation}
-          options={{ title: 'FlashCards' }}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        <AppStatusBar backgroundColor={primaryDark} />
+        <Stack.Navigator
+          screenOptions={{
+            headerTintColor: white,
+            headerStyle: { backgroundColor: primaryDark }
+          }}
+        >
+          <Stack.Screen
+            name="Home"
+            component={TabNavigation}
+            options={{ title: 'FlashCards' }}
+          />
+          <Stack.Screen
+            name="DeckDetails"
+            component={DeckDetails}
+            options={({ route }) => ({ title: route.params.title })}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 }
