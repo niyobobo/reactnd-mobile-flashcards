@@ -1,19 +1,81 @@
+import { FontAwesome, Ionicons } from '@expo/vector-icons';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import Constants from 'expo-constants';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Platform, StatusBar, View } from 'react-native';
+import { primaryDark, white } from './utils/colors';
+import Decks from './views/Decks';
+import NewDeck from './views/NewDeck';
+
+const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator();
+
+const TabNavigation = () => {
+  return (
+    <Tab.Navigator tabBarOptions={{ activeTintColor: primaryDark }}>
+      <Tab.Screen
+        name="Decks"
+        component={Decks}
+        options={{
+          tabBarIcon: ({ size, color }) =>
+            Platform.OS === 'ios' ? (
+              <Ionicons name="ios-apps" size={size} color={color} />
+            ) : (
+              <FontAwesome name="align-justify" size={size} color={color} />
+            )
+        }}
+      />
+      <Tab.Screen
+        name="NewDeck"
+        component={NewDeck}
+        options={{
+          title: 'New Deck',
+          tabBarIcon: ({ size, color }) =>
+            Platform.OS === 'ios' ? (
+              <Ionicons
+                name="ios-add-circle-outline"
+                size={size}
+                color={color}
+              />
+            ) : (
+              <FontAwesome name="edit" size={size} color={color} />
+            )
+        }}
+      />
+    </Tab.Navigator>
+  );
+};
+
+const AppStatusBar = ({ backgroundColor }) => {
+  return (
+    <View style={{ backgroundColor, height: Constants.statusBarHeight }}>
+      <StatusBar
+        barStyle="light-content"
+        backgroundColor={backgroundColor}
+        translucent
+      />
+    </View>
+  );
+};
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-    </View>
+    <NavigationContainer>
+      <AppStatusBar backgroundColor={primaryDark} />
+      <Stack.Navigator
+        screenOptions={{
+          headerTintColor: white,
+          headerStyle: { backgroundColor: primaryDark }
+        }}
+      >
+        <Stack.Screen
+          name="Home"
+          component={TabNavigation}
+          options={{ title: 'FlashCards' }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center'
-  }
-});
