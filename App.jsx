@@ -11,6 +11,7 @@ import { primaryDark, white } from './utils/colors';
 import DeckDetails from './views/DeckDetails';
 import Decks from './views/Decks';
 import NewDeck from './views/NewDeck';
+import NewQuestion from './views/NewQuestion';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -84,6 +85,7 @@ export default function App() {
             component={DeckDetails}
             options={({ route }) => ({ title: route.params.title })}
           />
+          <Stack.Screen name="Add Card" component={NewQuestion} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

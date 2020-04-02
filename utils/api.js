@@ -36,4 +36,8 @@ export const removeDeck = async (key) => {
   AsyncStorage.setItem(FLASHCARD_STORAGE_KEY, JSON.stringify(data));
 }
 
-export const addCardToDeck = (card, title) => {};
+export const addCardToDeck = async (card, deck) => {
+  const data = await AsyncStorage.getItem(FLASHCARD_STORAGE_KEY).then(JSON.parse);
+  data[deck].questions.push(card);
+  AsyncStorage.setItem(FLASHCARD_STORAGE_KEY, JSON.stringify(data));
+};

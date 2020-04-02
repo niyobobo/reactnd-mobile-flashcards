@@ -23,7 +23,7 @@ class DeckDetails extends Component {
     }
 
     const { title, questions } = deck;
-
+    const { navigation, id } = this.props;
     return (
       <View style={styles.container}>
         <Text style={styles.title}>{title}</Text>
@@ -33,7 +33,10 @@ class DeckDetails extends Component {
             : `${questions.length} Card`}
         </Text>
         <View>
-          <CustomBtn backgroundColor={primaryDark} onPress={() => {}}>
+          <CustomBtn
+            backgroundColor={primaryDark}
+            onPress={() => navigation.navigate('Add Card', { deck: id })}
+          >
             Add Card
           </CustomBtn>
           <CustomBtn backgroundColor={primaryDark} onPress={() => {}} outline>

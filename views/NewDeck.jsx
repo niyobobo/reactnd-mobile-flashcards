@@ -1,11 +1,5 @@
 import React, { Component } from 'react';
-import {
-  KeyboardAvoidingView,
-  Platform,
-  StyleSheet,
-  Text,
-  TextInput
-} from 'react-native';
+import { KeyboardAvoidingView, StyleSheet, Text, TextInput } from 'react-native';
 import { connect } from 'react-redux';
 import CustomBtn from '../components/CustomBtn';
 import { createADeck } from '../redux/actions/deck';
@@ -39,10 +33,7 @@ class NewDeck extends Component {
   render() {
     const { input, error } = this.state;
     return (
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={styles.container}
-      >
+      <KeyboardAvoidingView behavior="padding" style={styles.container}>
         <Text style={styles.title}>What's the title of your new deck?</Text>
         <TextInput
           placeholder="Deck title"
@@ -51,7 +42,7 @@ class NewDeck extends Component {
           onChangeText={this.handleChange}
         />
         <CustomBtn backgroundColor={primaryDark} onPress={this.handleSubmit}>
-          Create
+          Create Deck
         </CustomBtn>
       </KeyboardAvoidingView>
     );
