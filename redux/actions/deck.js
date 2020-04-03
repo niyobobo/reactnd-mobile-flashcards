@@ -1,8 +1,4 @@
-import {
-  getDecks,
-  saveDeckTitle,
-  removeDeck
-} from "../../utils/api";
+import { getDecks, removeDeck, saveDeckTitle } from "../../utils/api";
 
 export const GET_ALL_DECKS = 'GET_ALL_DECKS';
 export const CREATE_DECK = 'CREATE_DECK';

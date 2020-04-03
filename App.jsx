@@ -12,6 +12,7 @@ import DeckDetails from './views/DeckDetails';
 import Decks from './views/Decks';
 import NewDeck from './views/NewDeck';
 import NewQuestion from './views/NewQuestion';
+import Quiz from './views/Quiz';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -86,6 +87,7 @@ export default function App() {
             options={({ route }) => ({ title: route.params.title })}
           />
           <Stack.Screen name="Add Card" component={NewQuestion} />
+          <Stack.Screen name="Quiz" component={Quiz} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

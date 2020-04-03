@@ -1,6 +1,4 @@
-import {
-  addCardToDeck
-} from "../../utils/api";
+import { addCardToDeck } from "../../utils/api";
 
 export const CREATE_CARD = 'CREATE_CARD';
 

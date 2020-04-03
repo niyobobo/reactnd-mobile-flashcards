@@ -1,6 +1,4 @@
-import {
-  AsyncStorage
-} from 'react-native';
+import { AsyncStorage } from 'react-native';
 
 const FLASHCARD_STORAGE_KEY = 'reactnano:flashcard';
 

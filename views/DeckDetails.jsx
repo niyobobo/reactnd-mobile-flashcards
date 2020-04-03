@@ -39,7 +39,11 @@ class DeckDetails extends Component {
           >
             Add Card
           </CustomBtn>
-          <CustomBtn backgroundColor={primaryDark} onPress={() => {}} outline>
+          <CustomBtn
+            backgroundColor={primaryDark}
+            onPress={() => navigation.navigate('Quiz', { deck: id })}
+            outline
+          >
             Start Quiz
           </CustomBtn>
           <CustomBtn
