@@ -44,7 +44,7 @@ class DeckDetails extends Component {
             onPress={() => navigation.navigate('Quiz', { deck: id })}
             outline
           >
-            Start Quiz
+            Start a Quiz
           </CustomBtn>
           <CustomBtn
             backgroundColor={red}

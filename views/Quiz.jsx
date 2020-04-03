@@ -5,6 +5,7 @@ import AnswerView from '../components/Answer';
 import CustomBtn from '../components/CustomBtn';
 import FinalScore from '../components/FinalScore';
 import { primary, primaryDark, white } from '../utils/colors';
+import { clearAllLocalNotification, setLocalNotification } from '../utils/helper';
 
 class Quiz extends Component {
   state = {
@@ -40,6 +41,7 @@ class Quiz extends Component {
       currentQuestion: 0,
       showAnswer: false
     }));
+    clearAllLocalNotification().then(setLocalNotification);
   };
 
   render() {
@@ -87,7 +89,7 @@ class Quiz extends Component {
                 onPress={this.handleShowAnswer}
                 outline
               >
-                Show answer
+                Show Answer
               </CustomBtn>
             ) : (
               <AnswerView

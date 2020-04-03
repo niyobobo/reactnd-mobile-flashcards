@@ -23,11 +23,16 @@ class NewDeck extends Component {
     if (!input.length) {
       return this.setState(() => ({ error: true }));
     }
+
     this.props.createDeck(input);
     this.setState(() => ({
       input: ''
     }));
-    this.props.navigation.goBack();
+
+    this.props.navigation.navigate('DeckDetails', {
+      key: input.replace(' ', ''),
+      title: input
+    });
   };
 
   render() {
