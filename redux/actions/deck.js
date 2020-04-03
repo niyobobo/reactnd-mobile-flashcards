@@ -25,16 +25,30 @@ const removeDeckAction = (key) => {
   }
 }
 
+/**
+ * Action creator for fetching all decks and its related data
+ * and trigger redux state update
+ *
+ */
 export const getAllDecks = () => async dispatch => {
   const results = await getDecks();
   return dispatch(getDecksAction(results));
 }
 
+/**
+ * Action creator for creating a new deck and trigger redux state update
+ *
+ * @param {string} title - deck title
+ */
 export const createADeck = (title) => async dispatch => {
   const deck = await saveDeckTitle(title);
   return dispatch(createDeckAction(deck));
 }
 
+/**
+ * Action creator for deleting a deck and trigger redux state update
+ * @param {*} key - deckId
+ */
 export const deleteDeck = (key) => dispatch => {
   dispatch(removeDeckAction(key));
   return removeDeck(key);

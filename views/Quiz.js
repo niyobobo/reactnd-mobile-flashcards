@@ -73,7 +73,10 @@ class Quiz extends Component {
             correctAnswer={correctAnswer}
             questions={questions}
             restart={this.handleReset}
-            goBack={() => navigation.goBack()}
+            goBack={() => {
+              navigation.goBack();
+              clearAllLocalNotification().then(setLocalNotification);
+            }}
           />
         ) : (
           <View>

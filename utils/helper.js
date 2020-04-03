@@ -4,6 +4,9 @@ import { AsyncStorage } from "react-native";
 
 const LOCAL_NOTIFICATION = 'NanoDegree:mobileFlashcards';
 
+/**
+ * Notification object
+ */
 const createNotification = () => {
   return {
     title: 'Log your stats!',
@@ -20,12 +23,17 @@ const createNotification = () => {
   };
 };
 
+/**
+ * Handling Notification permission request and notification storage
+ */
 export const setLocalNotification = () => {
   AsyncStorage.getItem(LOCAL_NOTIFICATION)
     .then(JSON.parse)
     .then(data => {
       if (data === null) {
-        Permissions.askAsync(Permissions.NOTIFICATIONS).then(({ status }) => {
+        Permissions.askAsync(Permissions.NOTIFICATIONS).then(({
+          status
+        }) => {
           if (status === 'granted') {
             Notifications.cancelAllScheduledNotificationsAsync();
 
@@ -45,6 +53,9 @@ export const setLocalNotification = () => {
     })
 }
 
+/**
+ * Clear scheduled notification if the user has completed at least a test per day
+ */
 export const clearAllLocalNotification = () => {
   return AsyncStorage.removeItem(LOCAL_NOTIFICATION).then(
     Notifications.cancelAllScheduledNotificationsAsync
